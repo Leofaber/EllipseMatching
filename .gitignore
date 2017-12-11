@@ -1,0 +1,8 @@
+
+_Makefile
+*.txt
+version
+
+obj/*
+bin/*
+test_matlab/*
