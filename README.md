@@ -8,13 +8,20 @@ This software describes the relative positions of two ellipses in a 2D space.
 
 ## Inputs:
 
-* input1 e input 2: .ell files that describe one ellipse per row. The ellipses are described according to five parameters:
+* input1 e input 2: .ell files that describe one ellipse per row. The ellipses are described according to six parameters:
+  * the name
   * center x
   * center y
   * a axis
   * b axis
   * phi, rotation of the major axis respect to abscissa
 * output: il nome del file di output 
+
+Example of input .ell file:
+    S31 212.793 -45.3849 0.557728 0.642922 -17.5603
+    S32 212.793 225.3849 0.557728 0.642922 0.0
+    S33 212.793 -45.3849 0.557728 0.642922 -17.5603
+
 
 ## Outputs:
 Write on file, for each ellipses position in input1 and for each ellipses position in input2, a description of relative positions. There are different outcomes:
