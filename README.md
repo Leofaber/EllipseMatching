@@ -15,3 +15,15 @@ Il software verifica la posizione di due ellissi
   * b axis
   * phi, rotation of the major axis respect to abscissa
 * output: il nome del file di output 
+
+## Outputs:
+For each ellipses position in input1 and for each ellipses position in input2, there are different outcomes:
+* "is contained in"
+* "is contained but tangent to"
+* "is equal to"
+* "overlap with"
+* "contains but tangent to"
+* "contains"
+* "is external but tangent to"
+* "is external to"
+* "error"
