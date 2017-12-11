@@ -73,7 +73,9 @@ else
 CXX = g++
 endif
 
-CXXFLAGS = -g -O2 -std=c++11 -pipe -I $(INCLUDE_DIR)
+#CXXFLAGS = -g -02 -std=c++11 -pipe -I $(INCLUDE_DIR)
+
+CXXFLAGS = -g -O2 -pipe -I $(INCLUDE_DIR)
 
 
 ifneq (, $(findstring root, $(LINKERENV)))

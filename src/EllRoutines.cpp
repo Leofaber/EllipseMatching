@@ -361,7 +361,7 @@ vector<double> EllRoutines::cubic(vector<double>& k, double tol = 1/pow(10,12)){
         if (d0 != 0.)
         {
             s.push_back((9.*a*d - b*c)/(2.*d0));
-            s.push_back((4.*a*b*c - 9.*pow(a,2)*d - pow(3,b))/(a*d0) );
+            s.push_back((4.*a*b*c - 9.*pow(a,2)*d - pow(b,3))/(a*d0) );
 
 
 
