@@ -18,6 +18,7 @@ This software describes the relative positions of two ellipses in a 2D space.
 * output: il nome del file di output 
 
 Example of input .ell file:
+
     S31 212.793 -45.3849 0.557728 0.642922 -17.5603
     S32 212.793 225.3849 0.557728 0.642922 0.0
     S33 212.793 -45.3849 0.557728 0.642922 -17.5603
