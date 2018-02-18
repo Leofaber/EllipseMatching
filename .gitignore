@@ -2,7 +2,9 @@
 _Makefile
 *.txt
 version
-
+ellipse1_list_tests.ell
+ellipse2_list_tests.ell
+output.ell
 obj/*
 bin/*
 test_matlab/*
