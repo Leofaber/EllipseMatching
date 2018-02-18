@@ -22,7 +22,7 @@ SHELL = /bin/sh
 
 SYSTEM= $(shell gcc -dumpmachine)
 #ice, ctarta, mpi, cfitsio
-LINKERENV= 
+LINKERENV=
 
 # Applications
 AG_EXE = AG_ellipse_matching
@@ -77,12 +77,16 @@ endif
 
 CXXFLAGS = -g -O2 -pipe -I $(INCLUDE_DIR)
 
+ifeq ($(DEBUG),1)
+	CXXFLAGS += -DDEBUG
+endif
+
 
 ifneq (, $(findstring root, $(LINKERENV)))
     CXXFLAGS += -W -fPIC -D_REENTRANT $(shell root-config --cflags)
     LIBS += $(shell root-config --glibs) -lMinuit
 endif
- 
+
 LINK     = $(CXX)
 #for link
 LFLAGS = -shared -Wl,-soname,$(TARGET1) -Wl,-rpath,$(DESTDIR)
@@ -161,7 +165,7 @@ exe: makeobjdir $(OBJECTS)
 
 staticlib: makelibdir makeobjdir $(OBJECTS)
 	test -d $(LIB_DESTDIR) || mkdir -p $(LIB_DESTDIR)
-	$(DEL_FILE) $(LIB_DESTDIR)/$(TARGETA) 
+	$(DEL_FILE) $(LIB_DESTDIR)/$(TARGETA)
 	$(AR) $(LIB_DESTDIR)/$(TARGETA) $(OBJECTS_DIR)/*.o
 
 dynamiclib: makelibdir makeobjdir $(OBJECTS)
@@ -259,4 +263,3 @@ info: makedoxdir $(DOC_INCLUDE) $(DOC_SOURCE)
 
 makedoxdir:
 	test -d $(DOXY_SOURCE_DIR) || mkdir -p $(DOXY_SOURCE_DIR)
-

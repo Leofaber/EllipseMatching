@@ -2,9 +2,15 @@
 
 This software describes the relative positions of two ellipses in a 2D space.
 
-## Utilizzo: 
+## Compilation
 
-    ./bin/A./bin/AG_ellipse_matching input1 input2 output
+For debugging purpose use:
+    * export DEBUG=1
+    * make
+
+## Usage:
+
+    ./bin/AG_ellipse_matching input1 input2 output
 
 ## Inputs:
 
@@ -15,7 +21,7 @@ This software describes the relative positions of two ellipses in a 2D space.
   * a axis
   * b axis
   * phi, rotation of the major axis respect to abscissa
-* output: il nome del file di output 
+* output: il nome del file di output
 
 Example of input .ell file:
 

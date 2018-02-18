@@ -20,7 +20,7 @@ std::vector<Ellipse> InputReader::readEllipsesFromFile(std::string filename)
         while (getline(infile, line))
         {
 
-            if(line.size()>30){
+            if(!line.empty()){
 
                 //cout << "Found ellipse" <<endl;
                 //replace(line.begin(), line.end(), ',', ' ');
@@ -49,6 +49,11 @@ std::vector<Ellipse> InputReader::readEllipsesFromFile(std::string filename)
                 //   cout <<date<<endl;
                 ellipses.push_back(Ellipse(n,x,y,a,b,p));
 
+            }
+            else{
+                #if DEBUG==1
+                    cout << "[InputReader] Line is empty!! " << endl;
+                #endif
             }
         }
 

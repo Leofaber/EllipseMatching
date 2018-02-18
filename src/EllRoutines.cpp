@@ -1,12 +1,16 @@
 #include "EllRoutines.h"
 
+
+
 EllRoutines::EllRoutines()
 {
 
 }
 int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Matrix2D& M1, pair<double,double>&C2, Matrix2D& D2, Matrix2D& R2, Matrix2D& M2, double tol = 1/pow(10,12))
 {
-    
+    #if DEBUG == 1
+        cout << "elltest()" << endl;
+    #endif
     // First transformation:
     // E1 became a unit circle centered on the origin
     pair<double,double> Ctemp = make_pair(C2.first-C1.first, C2.second-C1.second);
@@ -20,17 +24,17 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
 
     Matrix2D M3 = S1*Matrix2D::transpose(R1)*M2*R1*S1;
 
-    
+
     /// Second transformation:
     /// Rotate to align E2 with the x/y axis
 
     Matrix2D R4 = Matrix2D::getVD(M3).first;        /// get V (autovettori)
     Matrix2D D4 = Matrix2D::getVD(M3).second;       /// get D (matrice diagonale di autovalori)
 
-  
+
     pair<double,double> C4 = Matrix2D::transpose(R4).vectorMultiplication(C3);
 
- 
+
 
 
 
@@ -65,7 +69,7 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
         /// GetRoots
         vector<double> s = EllRoutines::quartic(k,pow(10,-6));
 
-        
+
         /// Get real non-zero roots
         vector<int> ids;
         int index=0;
@@ -99,12 +103,12 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
             ds.push_back( std::sqrt(pow(px_elem,2)+pow(py_elem,2)));
         }
 
-        
+
     }
 
-    //EllRoutines::printVector(px,"px");
-    //EllRoutines::printVector(py,"py");
-    //EllRoutines::printVector(ds,"ds");
+
+
+    EllRoutines::printVector(ds,"ds");
 
 
     /// Intersection Query
@@ -115,7 +119,7 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
     double ds_max = *std::max_element(ds.begin(), ds.end());
     double ds_min = *std::min_element(ds.begin(), ds.end());
 
-    
+
     if ( ds_max < 1)
         res = 0;
     else if (ds_max > 1)
@@ -146,13 +150,18 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
             res = 2;
     }
 
-    
+
     return res;
 
 }
 
 vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12))
 {
+
+    #if DEBUG == 1
+        cout << "quartic()" << endl;
+    #endif
+
     vector<complex<double> > s;
 
     double a,b,c,d = 0;
@@ -163,12 +172,12 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
     c = k[3]/k[0];
     d = k[4]/k[0];
 
-    
-    
+
+
 
     if ( d==0 )
     {
-    
+
         ///cubic
         double arr[] = {1.,a,b,c};
         vector<double> z(arr, arr+4);
@@ -176,7 +185,7 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
         s.push_back(0);
 
         vector<double> t = cubic(z, tol);
-     
+
         for(vector<double>::iterator i = t.begin(); i < t.end(); ++i)
         {
             s.push_back(*i);
@@ -184,18 +193,18 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
     }
     else
     {
-      
+
         /// Depressed quartic y^4 + p*y^2 + q*y + r = 0
         double p = ( 8*b - 3*pow(a,2) )/8;
         double q = ( pow(a,3) - 4*a*b + 8*c)/8;
         double r = ( -3*pow(a,4) + 256*d - 64*c*a + 16*pow(a,2)*b)/256;
 
-       
+
         /// Standard depressed quartic
         if( q!=0 )
         {
 
-        
+
             /// cubic
             double arr[] = {1. , p*5/2,  2*pow(p,2) - r,   pow(p,3)/2 - p*r/2 - pow(q,2)/8};
             vector<double> z(arr, arr+4);
@@ -208,7 +217,7 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
             {
                 g.push_back(p+2* (*i));
             }
-          
+
 
 
             int id = -1;
@@ -238,12 +247,12 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
 
                 }
             }
-           
+
             /// build the roots of the quartic
-            
+
             double u = t[id];
             double v = std::sqrt(g[id]);
-             
+
             double term = -k[1]/ (4*k[0]);
 
             s.push_back(term + 0.5 * (   v + sqrt(-(3*p + 2*u + 2*q/v)) ) );
@@ -252,18 +261,18 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
             s.push_back(term + 0.5 * ( - v - sqrt(-(3*p + 2*u - 2*q/v)) ) );
 
 
-             
+
         }
         else
         {
-            
+
             /// biquadratic
 
             d = pow(p,2) - 4*r;
 
             if ( d != 0)
             {
-             
+
                 double zp = (-1*p + std::sqrt(d))/2;
                 double zm = (-1*p - std::sqrt(d))/2;
                 s.push_back(std::sqrt(zp));
@@ -273,7 +282,7 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
             }
             else
             {
-              
+
                 double z = -p/2;
                 s.push_back(sqrt(z));
                 s.push_back(-1*sqrt(z));
@@ -294,11 +303,15 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
         }
 
     }
-     
+
     return s_real;
 }
 
 vector<double> EllRoutines::cubic(vector<double>& k, double tol = 1/pow(10,12)){
+    #if DEBUG == 1
+        cout << "cubic()" << endl;
+    #endif
+
     vector<complex<double> > s;
 
     complex<double> a = k[0];
@@ -311,15 +324,15 @@ vector<double> EllRoutines::cubic(vector<double>& k, double tol = 1/pow(10,12)){
     complex<double> d1 = 2.*pow(b,3) - 9.*a*b*c + 27.*pow(a,2)*d;
     complex<double> dl = (4.*pow(d0,3)-pow(d1,2))/(27.*pow(a,2));
 
-     
+
     complex<double> C;
 
     if (dl != 0.)
     {
- 
+
         if (d0 != 0.)
         {
-  
+
             complex<double> const4_c(4,0);
             complex<double> const2_c(2,0);
 
@@ -331,10 +344,10 @@ vector<double> EllRoutines::cubic(vector<double>& k, double tol = 1/pow(10,12)){
         }
         else
         {
-    
+
             C = pow(d1,1/3.);
         }
-  
+
         vector<complex<double> > u;
 
         u.push_back(1);
@@ -345,19 +358,19 @@ vector<double> EllRoutines::cubic(vector<double>& k, double tol = 1/pow(10,12)){
         complex<double> termMinus(-1,-sqrt(3));
         u.push_back( termMinus/2. );
 
-   
+
         for(vector<complex<double> >::iterator i = u.begin(); i!=u.end(); ++i)
         {
             complex<double> u_elem = *i;
             complex<double> temp = -(b + u_elem*C + d0/(u_elem*C))/(3.*a);
              s.push_back( temp );
         }
-    
+
 
     }
     else
     {
-     
+
         if (d0 != 0.)
         {
             s.push_back((9.*a*d - b*c)/(2.*d0));
@@ -368,15 +381,15 @@ vector<double> EllRoutines::cubic(vector<double>& k, double tol = 1/pow(10,12)){
         }
         else
         {
- 
+
             s.push_back( -b/3.*a );
 
         }
- 
+
     }
 
 
- 
+
     vector<double> s_real;
 
     for(vector<complex<double> >::iterator i = s.begin(); i != s.end(); i++)
@@ -389,9 +402,9 @@ vector<double> EllRoutines::cubic(vector<double>& k, double tol = 1/pow(10,12)){
         }
 
     }
- 
 
- 
+
+
 
 
     return s_real;
@@ -461,4 +474,3 @@ void EllRoutines::printComplexVector(vector< complex<double> >& k, string name){
     }
     cout << "\n";
 }
-
