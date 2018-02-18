@@ -5,8 +5,8 @@ This software describes the relative positions of two ellipses in a 2D space.
 ## Compilation
 
 For debugging purpose use:
-    * export DEBUG=1
-    * make
+   * export DEBUG=1
+   * make
 
 ## Usage:
 
