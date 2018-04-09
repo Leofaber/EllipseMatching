@@ -18,8 +18,8 @@ For debugging purpose use:
   * the name
   * center x
   * center y
-  * a axis
-  * b axis
+  * a semi-axis
+  * b semi-axis
   * phi, rotation of the major axis respect to abscissa
 * output: il nome del file di output
 
