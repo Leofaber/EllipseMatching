@@ -85,7 +85,7 @@ pair<Matrix2D, Matrix2D> Matrix2D::eigenvalueDecompositionSymm(Matrix2D m)
 
     Matrix2D D("D",l1,0,0,l2);
 
-   
+
 
     pair<double,double> ev1 = make_pair(0,0);
     pair<double,double> ev2 = make_pair(0,0);
@@ -116,7 +116,7 @@ pair<Matrix2D, Matrix2D> Matrix2D::eigenvalueDecompositionSymm(Matrix2D m)
 
     Matrix2D R("R",ev1.first,ev2.first,ev1.second,ev2.second);
 
- 
+
 
     return make_pair(R,D);
 }

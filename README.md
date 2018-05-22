@@ -59,3 +59,21 @@ Example of output file:
     [00003] S33
     [00001] S29 overlap with [00003] S33--3
     [00002] S30 is external to [00003] S33--7
+
+
+# Ellipse Matching Testing
+
+Added the script slider_ellipse_test.py
+The script takes in input two ellipses and translation parameters. The first ellipse is fixed, the second is translated by the translation parameters. At each step of the translation, the EllipseMatching software is run. At the end of the translation a plot is being shown, reporting the EllipseMatching output.
+
+## Usage:
+python slider_ellipse_test.py <reference ellipse file> <slider ellipse file> <translation_magnitude> <direction> <step_size>
+
+* reference ellipse file: should contain only one ellipse in the Ellipse Matching format.
+* slider ellipse file: should contain only one ellipse in the Ellipse Matching format.
+* translation_magnitude: the lenght of the translation
+* direction: possible values: {N,S,O,E,NO,NE,SO,SE}
+* step_size: at each step, the second ellipse is translated by step_size
+
+## Example:
+python slider_ellipse_test.py ../test_14_ref_ell.ell ../test_14_slider_ell.ell 1.5 O 0.1

@@ -11,6 +11,14 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
     #if DEBUG == 1
         cout << "elltest()" << endl;
     #endif
+
+    Matrix2D P("P1",1,2,5,7);
+    Matrix2D Z1 = Matrix2D::getVD(P).first;        /// get V (autovettori)
+    Matrix2D X1 = Matrix2D::getVD(P).second;       /// get D (matrice diagonale di autovalori)
+    Z1.print();
+    X1.print();
+
+
     // First transformation:
     // E1 became a unit circle centered on the origin
     pair<double,double> Ctemp = make_pair(C2.first-C1.first, C2.second-C1.second);
@@ -19,23 +27,42 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
 
     pair<double,double> C3 = Ctemp2.vectorMultiplication(Ctemp);
 
+    #if DEBUG == 1
+        cout << "C3: "  << C3.first << " " << C3.second;
+    #endif
 
     Matrix2D S1("S1", 1./std::sqrt(D1.matrix[0][0]), 0, 0, 1./std::sqrt(D1.matrix[1][1]));
 
+    #if DEBUG == 1
+        S1.print();
+        Matrix2D::transpose(R1).print();
+        M2.print();
+        R1.print();
+        S1.print();
+    #endif
+
+
     Matrix2D M3 = S1*Matrix2D::transpose(R1)*M2*R1*S1;
 
-
+    #if DEBUG == 1
+        M3.print();
+    #endif
     /// Second transformation:
     /// Rotate to align E2 with the x/y axis
 
     Matrix2D R4 = Matrix2D::getVD(M3).first;        /// get V (autovettori)
     Matrix2D D4 = Matrix2D::getVD(M3).second;       /// get D (matrice diagonale di autovalori)
 
+    #if DEBUG == 1
+        R4.print();
+        D4.print();
+    #endif
+
 
     pair<double,double> C4 = Matrix2D::transpose(R4).vectorMultiplication(C3);
-
-
-
+    #if DEBUG == 1
+        cout << "C4: "  << C4.first << " " << C4.second;
+    #endif
 
 
     /// Quartic equation for extremal points
@@ -43,6 +70,11 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
     double d2 = D4.matrix[1][1];
     double c1 = C4.first;
     double c2 = C4.second;
+
+    #if DEBUG == 1
+        cout << "\nd1,d2,c1,c2: " << d1 << " " << d2 << " " << c1 << " " << c2 <<endl;
+    #endif
+
 
     vector<double> ds;
 
@@ -68,6 +100,13 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
 
         /// GetRoots
         vector<double> s = EllRoutines::quartic(k,pow(10,-6));
+        #if DEBUG == 1
+            cout << "s from quartic():  ";
+            for(vector<double>::iterator i = s.begin(); i != s.end(); ++i)
+            {
+                cout << *i << " ";
+            }
+        #endif
 
 
         /// Get real non-zero roots
@@ -88,6 +127,13 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
         {
             s2.push_back(s[*i]);
         }
+        #if DEBUG == 1
+        cout << "\nreal non-zero roots:  ";
+        for(vector<double>::iterator i = s2.begin(); i != s2.end(); ++i)
+        {
+            cout << *i << " ";
+        }
+        #endif
 
         /// Get extremal points
         vector<double> px;
@@ -96,13 +142,40 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
         for(vector<double>::iterator i = s2.begin(); i != s2.end(); ++i)
         {
             double s2_elem = *i;
-            double px_elem = d1*c1*s2_elem/(d1*s2_elem -1);
-            double py_elem = d2*c2*s2_elem/(d2*s2_elem -1);
+
+            double px_elem;
+            double px_num = d1*c1*s2_elem;
+            double px_den = (d1*s2_elem -1);
+            if (px_num == 0 && px_den == 0) // 0 / 0 = NaN
+                px_elem = 0;
+             else
+                px_elem = px_num/px_den;
+
+
+            double py_elem;
+            double py_num = d2*c2*s2_elem;
+            double py_den = (d2*s2_elem -1);
+            if (py_num == 0 && py_den == 0) // 0 / 0 = NaN
+                py_elem = 0;
+             else
+                py_elem = py_num/py_den;
+
             px.push_back(px_elem);
             py.push_back(py_elem);
             ds.push_back( std::sqrt(pow(px_elem,2)+pow(py_elem,2)));
         }
-
+        #if DEBUG == 1
+            cout << "\npx:  ";
+            for(vector<double>::iterator i = px.begin(); i != px.end(); ++i)
+            {
+                cout << *i << " ";
+            }
+            cout << "\npy:   ";
+            for(vector<double>::iterator i = py.begin(); i != py.end(); ++i)
+            {
+                cout << *i << " ";
+            }
+        #endif
 
     }
 
@@ -118,6 +191,23 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
 
     double ds_max = *std::max_element(ds.begin(), ds.end());
     double ds_min = *std::min_element(ds.begin(), ds.end());
+
+    cout << "DS_MAX: " << ds_max << endl;
+    cout << "DS_MIN: " << ds_min << endl;
+
+    double d = 1.0;
+
+    bool b = ds_min < d;
+    cout << b << endl;
+
+    bool b1 = ds_min > d;
+    cout << b1 << endl;
+
+    bool b2 = ds_min == d;
+    cout << b2 << endl;
+
+    bool b3 = ds_min != d;
+    cout << b3 << endl;
 
 
     if ( ds_max < 1)
@@ -172,7 +262,9 @@ vector<double> EllRoutines::quartic(vector<double>& k, double tol = 1/pow(10,12)
     c = k[3]/k[0];
     d = k[4]/k[0];
 
-
+    #if DEBUG == 1
+        cout << "a,b,c,d: " << a << " " << b << " " << c << " " << d << " " << endl;
+    #endif
 
 
     if ( d==0 )
@@ -448,29 +540,30 @@ pair<string,short int> EllRoutines::ellmsg(int res)
 
 }
 void EllRoutines::printVector(vector<double>& k, string name){
-    cout <<"\n"<<name << ": "<<endl;
+    cout <<"\n"<<name << ": ";
+    // std::cout.precision(15);
     for(vector<double>::iterator i = k.begin(); i < k.end(); ++i)
     {
-        cout << "\t "<< std::fixed << *i << " ";
+        cout << " "<< std::fixed << *i << " ";
     }
-        cout << "\n";
+    cout << "\n";
 
 }
 void EllRoutines::printVector(vector<int>& k, string name){
-    cout <<"\n"<<name << ": "<<endl;
+    cout <<"\n"<<name << ": ";
     for(vector<int>::iterator i = k.begin(); i < k.end(); ++i)
     {
-        cout << "\t "<< std::fixed << *i << " ";
+        cout << " "<< std::fixed << *i << " ";
     }
-        cout << "\n";
+    cout << "\n";
 
 }
 void EllRoutines::printComplexVector(vector< complex<double> >& k, string name){
-    cout <<"\n"<<name << ": "<<endl;
+    cout <<"\n"<<name << ": ";
     for(vector< complex<double> >::iterator i = k.begin(); i < k.end(); ++i)
     {
         complex<double> cd = *i;
-        cout << "\t" <<cd << " ";
+        cout << " " <<cd << " ";
     }
     cout << "\n";
 }

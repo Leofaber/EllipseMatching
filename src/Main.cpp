@@ -25,8 +25,10 @@ using std::iterator;
 
 int main(int argc, char*argv[]){
 
+#ifndef DEBUG
     cout<<"******************************************************************"<<endl;
     cout<<"****************** ELLIPSE MATCHING C++ ROUTINE ******************"<<endl;
+#endif
 
     #if DEBUG == 1
         cout << "** DEBUG MODE ON **" <<endl;
@@ -43,10 +45,12 @@ int main(int argc, char*argv[]){
 
     vector<Ellipse> e1 = InputReader::readEllipsesFromFile(filename1);
     vector<Ellipse> e2 = InputReader::readEllipsesFromFile(filename2);
+    /*
     #if DEBUG
         cout << filename1 << " -> " << e1.size() << endl;
         cout << filename2 << " -> " << e2.size() << endl;
     #endif
+    */
 
     // output
     FILE * outF;
