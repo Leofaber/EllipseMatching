@@ -65,7 +65,7 @@ int main(int argc, char*argv[]){
 
         #if DEBUG
             //fprintf(outF,"[%.5d] %s\n",index1,e1.name.c_str());
-            printf("[%.5d] %s\n",index1,e1.name.c_str());
+            printf("\n\n[%.5d] %s\n",index1,e1.name.c_str());
         #endif
 
         int index2=1;
@@ -75,8 +75,13 @@ int main(int argc, char*argv[]){
 
             if ( e1.isEqual(e2) )
             {
-                fprintf(outF,"[%.5d] %s is equal to [%.5d] %s--2\n",index2,e2.name.c_str(),index1,e1.name.c_str());
-                printf("[%.5d] %s is equal to [%.5d] %s--2\n",index2,e2.name.c_str(),index1,e1.name.c_str());
+                #if DEBUG
+                  fprintf(outF,"[%.5d] %s is equal to [%.5d] %s--2 %s %3.3f %3.2f %f %f %f\n",index2,e2.name.c_str(),index1,e1.name.c_str(), e2.name.c_str(), e2.x,e2.y, e2.a, e2.b, e2.p);
+                  printf("[%.5d] %s is equal to [%.5d] %s--2 %s %3.3f %3.2f %f %f %f\n",index2,e2.name.c_str(),index1,e1.name.c_str(), e2.name.c_str(), e2.x,e2.y, e2.a, e2.b, e2.p);
+                #else
+                  fprintf(outF,"[%.5d] %s is equal to [%.5d] %s--2\n",index2,e2.name.c_str(),index1,e1.name.c_str());
+                  printf("[%.5d] %s is equal to [%.5d] %s--2\n",index2,e2.name.c_str(),index1,e1.name.c_str());
+                #endif
 
             }
             else
@@ -92,19 +97,34 @@ int main(int argc, char*argv[]){
                 {
                     /// ellmatrix() -> ellmatrix routine is encapsulated in Ellipse constructor
 
+                    // One degree rotation if the axis are parallel
+                    if (fabs(e1.p - e2.p) <= 1/pow(10,6)){
+                      cout << "==> Ellipses are parallel!! e1.p: "<< e1.p <<"  e2.p: "<< e2.p << "fabs(e1.p-e2.p) = "<< fabs(e1.p - e2.p)<<endl;
+                      e1.p = e1.p + 1*M_PI/180;
+                      e1.updateMatrices();
+                      cout << "==> Ellipses new rotation: e1.p: "<< e1.p <<"  e2.p: "<< e2.p <<endl;
+                    }
+
                     int res = EllRoutines::elltest(e1.C,e1.D,e1.R,e1.M,e2.C,e2.D,e2.R,e2.M,1/pow(10,6));
 
                     pair<string,short int> msg = EllRoutines::ellmsg(res);
-
-                    fprintf(outF,"[%.5d] %s %s [%.5d] %s--%d\n",index2, e2.name.c_str(), msg.first.c_str(), index1, e1.name.c_str(), msg.second);
-                    printf("[%.5d] %s %s [%.5d] %s--%d\n",index2, e2.name.c_str(), msg.first.c_str(), index1, e1.name.c_str(), msg.second);
-
+                    #if DEBUG
+                      fprintf(outF,"[%.5d] %s %s [%.5d] %s--%d %s %3.3f %3.2f %f %f %f\n",index2, e2.name.c_str(), msg.first.c_str(), index1, e1.name.c_str(), msg.second, e2.name.c_str(), e2.x,e2.y, e2.a, e2.b, e2.p);
+                      printf("[%.5d] %s %s [%.5d] %s--%d %s %3.3f %3.2f %f %f %f\n",index2, e2.name.c_str(), msg.first.c_str(), index1, e1.name.c_str(), msg.second, e2.name.c_str(), e2.x,e2.y, e2.a, e2.b, e2.p);
+                    #else
+                      fprintf(outF,"[%.5d] %s %s [%.5d] %s--%d\n",index2, e2.name.c_str(), msg.first.c_str(), index1, e1.name.c_str(), msg.second);
+                      printf("[%.5d] %s %s [%.5d] %s--%d\n",index2, e2.name.c_str(), msg.first.c_str(), index1, e1.name.c_str(), msg.second);
+                    #endif
                 }
                 else
                 {
+                  #if DEBUG
+                    fprintf(outF,"[%.5d] %s is external to [%.5d] %s--7 %s %3.3f %3.2f %f %f %f\n",index2, e2.name.c_str(), index1, e1.name.c_str(), e2.name.c_str(), e2.x,e2.y, e2.a, e2.b, e2.p);
+                    printf("[%.5d] %s is external to [%.5d] %s--7 %s %3.3f %3.2f %f %f %f\n",index2, e2.name.c_str(), index1, e1.name.c_str(), e2.name.c_str(), e2.x,e2.y, e2.a, e2.b, e2.p);
+                  #else
                     fprintf(outF,"[%.5d] %s is external to [%.5d] %s--7\n",index2, e2.name.c_str(), index1, e1.name.c_str());
                     printf("[%.5d] %s is external to [%.5d] %s--7\n",index2, e2.name.c_str(), index1, e1.name.c_str());
-
+                  #endif
                 }
             }
 
@@ -116,6 +136,8 @@ int main(int argc, char*argv[]){
 
     cout<<"\n**************** ELLIPSE MATCHING C++ ROUTINE END ****************"<<endl;
     cout<<"******************************************************************"<<endl;
-
+    #if DEBUG
+      cout<<"\nEND OF THE PROGRAM"<<endl;
+    #endif
     return 0;
 }

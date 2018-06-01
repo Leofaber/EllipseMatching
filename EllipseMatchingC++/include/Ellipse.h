@@ -6,7 +6,6 @@
 #include <math.h>
 #include "Matrix2D.h"
 
-#define PI 3.1415926535
 
 using std::cout;
 using std::endl;
@@ -16,13 +15,13 @@ class Ellipse
     public:
         Ellipse(): name(""), x(0), y(0), a(0), b(0), p(0), r(0) {}
         Ellipse(std::string _n, double _x, double _y, double _a, double _b, double _p)
-                : name(_n), x(_x), y(_y), a(_a), b(_b), p(_p*PI/180),
+                : name(_n), x(_x), y(_y), a(_a), b(_b), p(_p*M_PI/180),
                   D("D", 1/pow(a,2), 0, 0, 1/pow(b,2)),
                   R("R",cos(p), -1*sin(p), sin(p), cos(p))
                 {
 
                     /// ellmatrix routine
-		
+
                     Matrix2D Rt = Matrix2D::transpose(R);
 
                     r = std::max(a,b);
@@ -56,6 +55,18 @@ class Ellipse
             if(x==other.x && y==other.y && a==other.a && b==other.b && p==other.p)
                 return true;
             return false;
+        }
+
+        void updateMatrices(){
+            R.matrix[0][0]=cos(p);
+            R.matrix[0][1]=-1*sin(p);
+            R.matrix[1][0]=sin(p);
+            R.matrix[1][1]=cos(p);
+            Matrix2D tmp = R*D*Matrix2D::transpose(R);
+            M.matrix[0][0] = tmp.matrix[0][0];
+            M.matrix[0][1] = tmp.matrix[0][1];
+            M.matrix[1][0] = tmp.matrix[1][0];
+            M.matrix[1][1] = tmp.matrix[1][1];
         }
 
  };

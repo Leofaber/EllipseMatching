@@ -8,3 +8,6 @@ output.ell
 obj/*
 bin/*
 test_matlab/*
+*.pyc
+EllipseMatchingC++/temp_out.txt
+EllipseMatchingMatlab_DEBUG/temp_out.txt

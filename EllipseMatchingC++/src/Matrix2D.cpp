@@ -83,12 +83,15 @@ pair<Matrix2D, Matrix2D> Matrix2D::eigenvalueDecompositionSymm(Matrix2D m)
     double l1 = trace/2 + disc;
     double l2 = trace/2 - disc;
 
-    Matrix2D D("D",l1,0,0,l2);
+    Matrix2D D("Autovalori",l2,0,0,l1);
 
 
 
     pair<double,double> ev1 = make_pair(0,0);
     pair<double,double> ev2 = make_pair(0,0);
+
+
+
 
     if(c!=0)
     {
@@ -100,10 +103,23 @@ pair<Matrix2D, Matrix2D> Matrix2D::eigenvalueDecompositionSymm(Matrix2D m)
         ev1.first  = b;           ev2.first  = b;
         ev1.second = l1-a;        ev2.second = l2-a;
     }
-    else
+    else if(b==0 && c==0)
     {
-        ev1.first  = 1;         ev2.first = 0;
+
+      pair<double,double> p = make_pair(1.0,0.0);
+      pair<double,double> v1 = m.vectorMultiplication(p);
+
+      if(v1.first == l2 && v1.second == 0){
+        ev1.first  = 1;         ev2.first  = 0;
         ev1.second = 0;         ev2.second = 1;
+      }
+      else{
+        ev1.first  = 0;         ev2.first  = 1;
+        ev1.second = 1;         ev2.second = 0;
+      }
+    }
+    else{
+      cout << "Error on EIG!" << endl;
     }
 
     double v1mag = std::sqrt( pow(ev1.first,2) + pow(ev1.second,2) );
@@ -112,9 +128,42 @@ pair<Matrix2D, Matrix2D> Matrix2D::eigenvalueDecompositionSymm(Matrix2D m)
     ev1.first/= v1mag;  ev1.second/= v1mag;
     ev2.first/= v2mag;  ev2.second/= v2mag;
 
+
+
+    // TODO !!!
+    /*
+    ./bin/AG_ellipse_matching ../PythonTestEllipseMatching/test_for_test/test_9_ref_ell.ell ../PythonTestEllipseMatching/test_for_test/test_9_slider_ell.ell ../out.ell
+    octave ELLIPSE_MATCHING.m  ../PythonTestEllipseMatching/test_for_test/test_9_ref_ell.ell ../PythonTestEllipseMatching/test_for_test/test_9_slider_ell.ell ../out.ell
+
+    --> VERIFICARE CHE IL REVERSE E IL *-1 VADA SEMPRE BENE...
+    --> VERIFICARE ERRORE SU    CUBIC !!
+    */
+    // reverse order and (-1)
+    double temp1 = ev1.first;
+    double temp2 = ev1.second;
+
+    ev1.first = (-1)*ev2.first;
+    ev1.second = (-1)*ev2.second;
+    ev2.first = (-1)*temp1;
+    ev2.second = (-1)*temp2;
+
+    /* TODO
+    cout << "Check" << endl;
+    pair<double,double> debug1 = m.vectorMultiplication(ev1);
+    cout << "\n" << debug1.first << "\n" << debug1.second << endl;
+    cout << "\n" << ev1.first*D.matrix[0][0] << "\n" << ev1.second*D.matrix[0][0] << endl;
+
+    pair<double,double> debug2 = m.vectorMultiplication(ev2);
+    cout << "\n" << debug2.first << "\n" << debug2.second << endl;
+    cout << "\n" << ev2.first*D.matrix[1][1] << "\n" << ev2.second*D.matrix[1][1] << endl;
+    */
+
+
 //    cout << "\n"<<ev1.first<<" "<<ev2.first<<"\n"<<ev1.second<<" "<<ev2.second<<endl;
 
-    Matrix2D R("R",ev1.first,ev2.first,ev1.second,ev2.second);
+    Matrix2D R("Autovettori",ev1.first,ev2.first,ev1.second,ev2.second);
+    // autovettori riordinati
+  //  Matrix2D R("R",ev2.first,ev1.first,ev2.second,ev1.second);
 
 
 
