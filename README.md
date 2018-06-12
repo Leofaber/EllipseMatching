@@ -40,12 +40,8 @@ For production use:
   * center y
   * a semi-axis
   * b semi-axis
-<<<<<<< HEAD
   * phi, rotation (degrees) of the major axis respect to abscissa
-=======
-  * phi, rotation of the major axis respect to abscissa
->>>>>>> 22a6a9c85118ccbe25db1d6bb249a3dd9d226057
-* output: il nome del file di output
+  * output: il nome del file di output
 
 Example of input1.ell file:
 
