@@ -1,13 +1,8 @@
 
-_Makefile
-*.txt
-version
-ellipse1_list_tests.ell
-ellipse2_list_tests.ell
-output.ell
-obj/*
-bin/*
-test_matlab/*
-*.pyc
-EllipseMatchingC++/temp_out.txt
-EllipseMatchingMatlab_DEBUG/temp_out.txt
+EllipseMatchingC++/obj/*
+EllipseMatchingC++/bin/*
+EllipseMatchingC++/version
+EllipseMatchingC++/*.txt
+EllipseMatchingMatlab/*txt
+EllipseMatchingMatlab_DEBUG/*txt
+EllipseMatchingTesting/*.pyc

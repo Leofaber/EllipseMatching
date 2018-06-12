@@ -22,6 +22,9 @@ For debugging purpose use:
    * export DEBUG=1
    * make
 
+For production use:
+   * make
+
 ## Usage:
 ### C++
     * ./bin/AG_ellipse_matching input1 input2 output
