@@ -99,10 +99,14 @@ int main(int argc, char*argv[]){
 
                     // One degree rotation if the axis are parallel
                     if (fabs(e1.p - e2.p) <= 1/pow(10,6)){
-                      cout << "==> Ellipses are parallel!! e1.p: "<< e1.p <<"  e2.p: "<< e2.p << "fabs(e1.p-e2.p) = "<< fabs(e1.p - e2.p)<<endl;
+                      #if DEBUG == 1
+                        cout << "==> Ellipses are parallel!! e1.p: "<< e1.p <<"  e2.p: "<< e2.p << "fabs(e1.p-e2.p) = "<< fabs(e1.p - e2.p)<<endl;
+                      #endif
                       e1.p = e1.p + 1*M_PI/180;
                       e1.updateMatrices();
-                      cout << "==> Ellipses new rotation: e1.p: "<< e1.p <<"  e2.p: "<< e2.p <<endl;
+                      #if DEBUG == 1
+                        cout << "==> Ellipses new rotation: e1.p: "<< e1.p <<"  e2.p: "<< e2.p <<endl;
+                      #endif
                     }
 
                     int res = EllRoutines::elltest(e1.C,e1.D,e1.R,e1.M,e2.C,e2.D,e2.R,e2.M,1/pow(10,6));

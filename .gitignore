@@ -6,3 +6,6 @@ EllipseMatchingC++/*.txt
 EllipseMatchingMatlab/*txt
 EllipseMatchingMatlab_DEBUG/*txt
 EllipseMatchingTesting/*.pyc
+ERROR_ELLS/*
+*.ell
+*.txt

@@ -47,6 +47,21 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
 
     Matrix2D M3 = S1*Matrix2D::transpose(R1)*M2*R1*S1;
 
+    for(int i=0; i < 2; i++)
+    {
+      for(int j=0; j < 2; j++)
+      {
+        if(fabs(M3.matrix[i][j])<=tol){
+          #if DEBUG == 1
+            cout << "Element " <<i<<","<<j<<" of matrix M3 is approximated to 0" << endl;
+          #endif
+          M3.matrix[i][j] = 0.;
+        }
+      }
+    }
+
+
+
     #if DEBUG == 1
         M3.print();
     #endif
@@ -110,7 +125,10 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
                 cout << *i << " ";
             }
         #endif
-
+        if(s.size()==0){
+          cout << "============> error! Vector 's' contains 0 elements!!" << endl;
+          exit(EXIT_FAILURE);
+        }
 
         /// Get real non-zero roots
         vector<int> ids;
@@ -138,6 +156,10 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
         }
         cout << endl;
         #endif
+        if(s2.size()==0){
+          cout << "============> error! Vector 's2' contains 0 elements!!" << endl;
+          exit(EXIT_FAILURE);
+        }
 
         /// Get extremal points
         vector<double> px;
@@ -605,9 +627,9 @@ vector<complex<double> > EllRoutines::cubic(vector<double>& k, double tol = 1/po
         }
     }
 
-
-    EllRoutines::printVector(s_after_check_tol,"s_after_check_tol end of cubic");
-
+    #if DEBUG == 1
+      EllRoutines::printVector(s_after_check_tol,"s_after_check_tol end of cubic");
+    #endif
 
 
     return s_after_check_tol;

@@ -24,6 +24,7 @@ For debugging purpose use:
 
 For production use:
    * make
+   * make install
 
 ## Usage:
 ### C++
@@ -87,7 +88,13 @@ Example of output file:
 
 # Ellipse Matching Testing
 
-Two types of test scripts are present.
+Three types of test scripts are present.
+
+## Draw Ellipses
+The script takes in input two files with extension .ell . Every ellipses present in the files will be draw in a plot.
+
+### Usage:
+python draw_ellipses.py file1.ell file2.ell
 
 ## Slider Ellipse Test
 The script takes in input two ellipses and translation parameters. The first ellipse is fixed, the second is translated by the translation parameters. At each step of the translation, the Matlab and C++ version of EllipseMatching software is run. At the end of the translation two plots are being shown, reporting the EllipseMatching output for each version.

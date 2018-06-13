@@ -29,9 +29,6 @@ class EllRoutines
         static vector<double> quartic(vector<double>& k, double tol);
         static vector<complex<double> > cubic(vector<double>& k, double tol);
 
-        static vector<double> approximateVectorElementToZero(vector<double>& v, double tol);
-        static vector<double> removeNanAndInfFromVector(vector<double>& v);
-
         static void printVector(vector<double>& k, string name);
         static void printVector(vector<int>& k, string name);
         static void printVector(vector<complex<double> >& k, string name);

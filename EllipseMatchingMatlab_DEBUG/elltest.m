@@ -33,6 +33,14 @@ disp(S1);
 
 M3 = S1*R1'*M2*R1*S1;
 
+[rows, columns] = size(M3);
+for row=1:rows
+    for col=1:columns
+      if M3(row,col) <= tol
+         M3(row,col) = 0
+      end
+    end
+end
 
 
 printf('M3:\n');
@@ -44,10 +52,8 @@ fprintf('M3:\n %s\n', g)
 % Rotate to align E2 with the x/y axis
 [R4,D4] = eig(M3);
 
-printf('R4:\n');
+printf('Matrice autovettori:\n');
 disp(R4);
-
-printf('D4:\n');
 disp(D4);
 
 
@@ -159,8 +165,13 @@ else % Extremal points shall be compute usign a quartic
 
     px = px_num ./ px_den;
 
-    g=sprintf('%.32f\n ', px);
-    fprintf('px:\n %s\n', g)
+    if isreal(px)
+      g=sprintf('%.32f\n ', px);
+      fprintf('px:\n %s\n', g)
+    else
+      disp('px:')
+      disp(px)
+    end
 
 
 
@@ -218,8 +229,13 @@ else % Extremal points shall be compute usign a quartic
 
     py = py_num ./ py_den;
 
-    g=sprintf('%.32f\n ', py);
-    fprintf('py:\n %s\n', g)
+    if isreal(py)
+      g=sprintf('%.32f\n ', py);
+      fprintf('py:\n %s\n', g);
+    else
+      disp('py:');
+      disp(py);
+    end
 
 
 
@@ -272,10 +288,15 @@ else % Extremal points shall be compute usign a quartic
 end
 
 
+if isreal(ds)
+  g=sprintf('%.32f\n ', ds);
+  fprintf('DS:\n %s\n', g)
+else
+  disp('ds:');
+  disp(ds);
+end
 
 
-g=sprintf('%.32f\n ', ds);
-fprintf('DS:\n %s\n', g)
 
 
 
