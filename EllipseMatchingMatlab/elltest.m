@@ -15,6 +15,14 @@ S1 = [1/sqrt(D1(1,1)) 0 ; 0 1/sqrt(D1(2,2))];
 
 M3 = S1*R1'*M2*R1*S1;
 
+[rows, columns] = size(M3);
+for row=1:rows
+    for col=1:columns
+      if M3(row,col) <= tol
+         M3(row,col) = 0
+      end
+    end
+end
 
 % Second trnsformation:
 % Rotate to align E2 with the x/y axis

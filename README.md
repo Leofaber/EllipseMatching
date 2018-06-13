@@ -22,6 +22,10 @@ For debugging purpose use:
    * export DEBUG=1
    * make
 
+For production use:
+   * make
+   * make install
+
 ## Usage:
 ### C++
     * ./bin/AG_ellipse_matching input1 input2 output
@@ -37,12 +41,8 @@ For debugging purpose use:
   * center y
   * a semi-axis
   * b semi-axis
-<<<<<<< HEAD
   * phi, rotation (degrees) of the major axis respect to abscissa
-=======
-  * phi, rotation of the major axis respect to abscissa
->>>>>>> 22a6a9c85118ccbe25db1d6bb249a3dd9d226057
-* output: il nome del file di output
+  * output: il nome del file di output
 
 Example of input1.ell file:
 
@@ -88,7 +88,13 @@ Example of output file:
 
 # Ellipse Matching Testing
 
-Two types of test scripts are present.
+Three types of test scripts are present.
+
+## Draw Ellipses
+The script takes in input two files with extension .ell . Every ellipses present in the files will be draw in a plot.
+
+### Usage:
+python draw_ellipses.py file1.ell file2.ell
 
 ## Slider Ellipse Test
 The script takes in input two ellipses and translation parameters. The first ellipse is fixed, the second is translated by the translation parameters. At each step of the translation, the Matlab and C++ version of EllipseMatching software is run. At the end of the translation two plots are being shown, reporting the EllipseMatching output for each version.

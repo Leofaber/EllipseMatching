@@ -33,12 +33,22 @@ disp(S1);
 
 M3 = S1*R1'*M2*R1*S1;
 
-
+[rows, columns] = size(M3);
+for row=1:rows
+    for col=1:columns
+      if M3(row,col) <= tol
+         M3(row,col) = 0
+      end
+    end
+end
 
 printf('M3:\n');
 disp(M3);
 g=sprintf('%.32f\n ', M3);
 fprintf('M3:\n %s\n', g)
+
+
+
 
 % Second trnsformation:
 % Rotate to align E2 with the x/y axis
@@ -111,7 +121,6 @@ else % Extremal points shall be compute usign a quartic
 
     disp('real non-zero roots:  ');
     disp(s);
-
 
 
 
