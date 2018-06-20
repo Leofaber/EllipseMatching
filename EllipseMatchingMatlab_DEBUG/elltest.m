@@ -48,6 +48,9 @@ printf('M3:\n');
 disp(M3);
 
 
+
+
+
 % Second trnsformation:
 % Rotate to align E2 with the x/y axis
 [R4,D4] = eig(M3);
@@ -117,7 +120,6 @@ else % Extremal points shall be compute usign a quartic
 
     disp('real non-zero roots:  ');
     disp(s);
-
 
 
 
