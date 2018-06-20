@@ -4,6 +4,7 @@
 #define DIM 2
 
 #include <iostream>
+#include <stdlib.h>
 using std::cout;
 using std::endl;
 
@@ -29,6 +30,7 @@ class Matrix2D
 
         void setRow(int row, double a, double b);
         void print();
+        void print(string name);
         bool isSymm();
         pair<double,double> vectorMultiplication(pair<double,double>& v);
 

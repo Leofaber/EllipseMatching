@@ -46,11 +46,11 @@ for i = 1 : length(e1)
     			if d <= e2(j).r + e1(i).r
 
             % One degree rotation if the axis are parallel
-            if (e1(i).p - e2(j).p) <= 1e-6
-              fprintf('\n==> Ellipses are parallel!! e1.p: %f  e2.p: %f',e1(i).p ,e2(j).p )
+            if (  abs(e1(i).p - e2(j).p)   ) <= 1e-6
+              fprintf('\n==> Ellipses are parallel!! e1.p: %f  e2.p: %f    e1.p-e2.p= %f',e1(i).p ,e2(j).p, e1(i).p -e2(j).p )
               e1(i).p = e1(i).p + 1*pi/180;
+              fprintf('\n==> Ellipses new rotation: e1.p: %f  e2.p: %f',e1(i).p ,e2(j).p )
             end
-            fprintf('\n==> Ellipses new rotation: e1.p: %f  e2.p: %f',e1(i).p ,e2(j).p )
 
 
 
