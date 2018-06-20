@@ -58,8 +58,6 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
       }
     }
 
-
-
     #if DEBUG == 1
         M3.print("M3");
     #endif

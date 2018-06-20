@@ -1,10 +1,9 @@
-
 EllipseMatchingC++/obj/*
-EllipseMatchingC++/bin/*
+EllipseMatchingC++/bin
 EllipseMatchingC++/version
 EllipseMatchingC++/*.txt
-EllipseMatchingMatlab/*txt
-EllipseMatchingMatlab_DEBUG/*txt
+EllipseMatchingMatlab/*.txt
+EllipseMatchingMatlab_DEBUG/*.txt
 EllipseMatchingTesting/*.pyc
 ERROR_ELLS/*
 *.ell
