@@ -22,7 +22,7 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
     #if DEBUG == 1
       D1.print();
       R1.print();
-      printf("Ctemp: %.32f\n %.32f\n",Ctemp.first, Ctemp.second );
+      //printf("Ctemp: %.32f\n %.32f\n",Ctemp.first, Ctemp.second );
     #endif
 
 
@@ -31,17 +31,15 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
     pair<double,double> C3 = Ctemp2.vectorMultiplication(Ctemp);
 
     #if DEBUG == 1
-        printf("C3: %.32f\n %.32f\n",C3.first, C3.second );
+        printf("C3:\n %.32f\n %.32f\n",C3.first, C3.second );
     #endif
 
     Matrix2D S1("S1", 1./std::sqrt(D1.matrix[0][0]), 0, 0, 1./std::sqrt(D1.matrix[1][1]));
 
     #if DEBUG == 1
         S1.print();
-        Matrix2D::transpose(R1).print();
-        M2.print();
-        R1.print();
-        S1.print();
+        Matrix2D::transpose(R1).print("R1");
+        M2.print("M2");
     #endif
 
 
@@ -63,7 +61,7 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
 
 
     #if DEBUG == 1
-        M3.print();
+        M3.print("M3");
     #endif
     /// Second transformation:
     /// Rotate to align E2 with the x/y axis
@@ -72,8 +70,8 @@ int EllRoutines::elltest(pair<double,double>&C1, Matrix2D& D1, Matrix2D& R1, Mat
     Matrix2D D4 = Matrix2D::getVD(M3).second;       /// get D (matrice diagonale di autovalori)
 
     #if DEBUG == 1
-        R4.print();
-        D4.print();
+        R4.print("Matrice autovettori");
+        D4.print("Diagonal Matrix");
     #endif
 
 

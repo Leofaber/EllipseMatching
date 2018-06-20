@@ -8,9 +8,11 @@ end
 
 fprintf('elltest()\n');
 
-disp(D1)
+disp('D1');
+disp(D1);
+disp('R1');
 disp(R1)
-disp(C2-C1)
+
 
 % First transformation:
 % E1 became a unit circle centered on the origin
@@ -28,25 +30,23 @@ printf('R1:\n');
 disp(R1');
 printf('M2:\n');
 disp(M2);
-printf('S1:\n');
-disp(S1);
 
 M3 = S1*R1'*M2*R1*S1;
 
 [rows, columns] = size(M3);
 for row=1:rows
-    for col=1:columns
-      if M3(row,col) <= tol
-         M3(row,col) = 0
-      end
+  for col=1:columns
+    if M3(row,col) <= tol
+      printf('Element %d,%d of matrix M3 is approximated to 0\n',row-1,col-1);
+      M3(row,col) = 0;
     end
+  end
 end
 
 
 printf('M3:\n');
 disp(M3);
-g=sprintf('%.32f\n ', M3);
-fprintf('M3:\n %s\n', g)
+
 
 % Second trnsformation:
 % Rotate to align E2 with the x/y axis
